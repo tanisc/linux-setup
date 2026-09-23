@@ -1,12 +1,13 @@
 # linux-setup
 
-Scripts to migrate this machine's setup (packages, dotfiles, `~/.tools`, `~/.ssh`, installer-based apps)
-to a fresh Ubuntu/Kubuntu install.
+Scripts to migrate this machine's setup (packages, dotfiles, `~/.tools`, `~/.ssh`, installer-based apps,
+conda environments) to a fresh Ubuntu/Kubuntu install.
 
 ## How it works
 
 - **`backup.sh`** — run on the machine being backed up. Copies real file content ($HOME paths,
-  `~/.ssh`, `~/.tools` scripts, the `winapps` repo) into `data/`.
+  `~/.ssh`, `~/.tools` scripts, the `winapps` repo) into `data/`, and exports conda envs to
+  `data/.env/`.
 - **`restore.sh`** — run on the freshly installed machine. Installs packages, then copies
   everything from `data/` back into place.
 - Both scripts run a fixed, ordered list of **steps**. Each step is a shell function
@@ -52,7 +53,7 @@ the session into KDE/Plasma and makes the `docker` group membership active.
 | `dotfiles` | Copies generic config files/dirs | `dotfiles.list` |
 | `tools_scripts` | Copies plain scripts under `~/.tools` (chmod +x on restore) | `tools-scripts.list` |
 | `tools_installers` | Apps needing their own installer (mostly under `~/.tools`), target dir comes from the manifest | `tools-installers.list` |
-| `conda_envs` | Backup: `conda env export` of every env into `data/.env/<name>.yml` (overwrites that env's file; never deletes other files in `data/.env/` — remove stale ones yourself, or they get restored too). Restore: first accepts Anaconda's channel ToS (`pkgs/main`, `pkgs/r`) via `conda tos accept` so it doesn't stop at the prompt, then recreates each env from its file (`base` is updated in place, existing envs are removed first). Runs after `tools_installers`, which installs Miniconda | (auto-generated, no manifest) |
+| `conda_envs` | Backup: `conda env export` of every env into `data/.env/<name>.yml` (overwrites that env's file; never deletes other files in `data/.env/` — remove stale ones yourself, or they get restored too). Restore: first accepts Anaconda's channel ToS (`pkgs/main`, `pkgs/r`) via `conda tos accept` so it doesn't stop at the prompt, then recreates each env from its file (`base` is updated in place, existing envs are removed first). An env that fails to build only prints a warning (failed envs are listed at the end of the step); the rest of the restore continues. Runs after `tools_installers`, which installs Miniconda | (auto-generated, no manifest) |
 | `winapps` | Restores the whole `~/.tools/winapps` repo as-is (not re-cloned from GitHub), starts the Windows-in-Docker container, **pauses for manual Windows setup**, then runs the interactive setup wizard | (whole-directory copy, no manifest) |
 | `ssh_gpg` | Copies `~/.ssh` and `~/.gnupg`, fixes permissions (`.ssh`: 700 dir / 600 keys / 644 `*.pub`; `.gnupg`: 700 dirs / 600 files) | (whole-directory copy, no manifest) |
 
@@ -64,8 +65,9 @@ them too).
 ## What's actually in each manifest right now
 
 - **`packages-apt.list`**: `kubuntu-desktop` (switches stock Ubuntu → KDE), `git`, `curl`,
-  `vlc`, `rclone`, `qgis`, `openconnect`, `gp-saml-gui`, `default-jre` (for Panoply), plus WinApps' apt dependencies
-  (`dialog`, `freerdp3-x11`, `iproute2`, `libnotify-bin`, `netcat-openbsd`).
+  `vlc`, `rclone`, `qgis`, `openconnect`, `gp-saml-gui`, `default-jre` (for Panoply),
+  `build-essential` (for pip packages compiled from source in conda envs, e.g. `gdal`), plus
+  WinApps' apt dependencies (`dialog`, `freerdp3-x11`, `iproute2`, `libnotify-bin`, `netcat-openbsd`).
 - **`packages-apt-remove.list`** / **`packages-snap-remove.list`**: `firefox` (ships as both
   an apt transitional package and a snap on stock Ubuntu).
 - **`packages-snap.list`** / **`packages-flatpak.list`**: empty for now.
@@ -90,6 +92,10 @@ them too).
 - **KDE session / `docker` group**: both require a reboot or re-login to actually take effect
   (confirmed working after reboot); `restore.sh` prints a reminder at the end but doesn't
   reboot for you.
+- **conda envs**: pip packages inside an env (e.g. `gdal` in `ds.yml`) may be built from source,
+  which needs `build-essential` (installed by `packages_apt`). Exports pin exact builds, so an
+  env can still fail if a build is gone from its channel; such envs only warn, and can be
+  retried by hand with `conda env remove -n <name> -y && conda env create -f data/.env/<name>.yml`.
 
 ## Deliberately not handled
 

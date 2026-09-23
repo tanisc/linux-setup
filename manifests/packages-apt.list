@@ -12,6 +12,9 @@ gp-saml-gui
 # required by panoply
 default-jre
 
+# compilers for pip packages built from source in conda envs (e.g. gdal in ds.yml)
+build-essential
+
 # winapps deps (https://github.com/winapps-org/winapps)
 dialog
 freerdp3-x11

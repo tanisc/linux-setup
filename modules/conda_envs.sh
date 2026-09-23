@@ -57,19 +57,26 @@ restore_conda_envs() {
         done
     fi
 
-    local file name
+    # A failing env (e.g. a pip package that won't build) only warns, so the
+    # remaining envs and later restore steps (winapps, ssh_gpg) still run.
+    local file name failed=()
     for file in "$CONDA_ENVS_DIR"/*.yml; do
         name="$(basename "$file" .yml)"
         if [[ "$name" == "base" ]]; then
             # base can't be removed/recreated, only updated in place.
             log "Updating conda base env from $name.yml"
-            "$conda" env update -n base -f "$file"
+            "$conda" env update -n base -f "$file" || failed+=("$name")
         else
             if "$conda" env list | awk '{print $1}' | grep -qx "$name"; then
-                "$conda" env remove -n "$name" -y
+                "$conda" env remove -n "$name" -y || { failed+=("$name"); continue; }
             fi
             log "Creating conda env '$name' from $name.yml"
-            "$conda" env create -n "$name" -f "$file"
+            "$conda" env create -n "$name" -f "$file" || failed+=("$name")
         fi
     done
+
+    if (( ${#failed[@]} )); then
+        warn "Failed to restore conda env(s): ${failed[*]} - see output above, fix and retry with:"
+        warn "  conda env remove -n <name> -y && conda env create -f data/.env/<name>.yml"
+    fi
 }
