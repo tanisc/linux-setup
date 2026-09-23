@@ -1,0 +1,5 @@
+# Installer-based apps that live under ~/.tools. Format: "<name> <install_dir>"
+# name (hyphens -> underscores) must map to install_<name>() in modules/tools_installers.sh
+# Lines starting with # (and blank lines) are ignored.
+esa-snap ~/.tools/esa-snap
+panoply ~/.tools/panoply

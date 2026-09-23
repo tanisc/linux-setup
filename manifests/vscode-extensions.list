@@ -1,0 +1,11 @@
+# VS Code extension IDs, one per line (as printed by `code --list-extensions`).
+# Lines starting with # (and blank lines) are ignored.
+bravo68web.propstar
+ms-vscode-remote.remote-containers
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
+ms-vscode-remote.remote-wsl
+ms-vscode-remote.vscode-remote-extensionpack
+ms-vscode.remote-explorer
+ms-vscode.remote-server
+sdras.night-owl

@@ -1,0 +1,17 @@
+# One apt package name per line.
+# Lines starting with # (and blank lines) are ignored.
+kubuntu-desktop
+git
+curl
+vlc
+rclone
+qgis
+openconnect
+gp-saml-gui
+
+# winapps deps (https://github.com/winapps-org/winapps)
+dialog
+freerdp3-x11
+iproute2
+libnotify-bin
+netcat-openbsd

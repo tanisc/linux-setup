@@ -1,0 +1,3 @@
+# snap packages to remove on restore, one per line.
+# Lines starting with # (and blank lines) are ignored.
+firefox

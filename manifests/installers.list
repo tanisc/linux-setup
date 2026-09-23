@@ -1,0 +1,7 @@
+# System-wide installer apps. Each name needs a matching install_<name>()
+# function in modules/installers.sh.
+# Lines starting with # (and blank lines) are ignored.
+chrome
+vscode
+claude
+docker

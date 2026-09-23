@@ -1,0 +1,2 @@
+# One snap package per line: "<name>" or "<name> classic" for --classic installs.
+# Lines starting with # (and blank lines) are ignored.

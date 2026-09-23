@@ -1,0 +1,3 @@
+# apt packages to purge on restore, one per line.
+# Lines starting with # (and blank lines) are ignored.
+firefox

@@ -1,0 +1,2 @@
+# One flatpak app ID per line (e.g. org.videolan.VLC), installed from the flathub remote.
+# Lines starting with # (and blank lines) are ignored.

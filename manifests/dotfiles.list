@@ -1,0 +1,8 @@
+# Config file/dir paths relative to $HOME, one per line ("~/" prefix optional).
+# Lines starting with # (and blank lines) are ignored.
+~/.config/rclone/rclone.conf
+~/.config/winapps/winapps.conf
+~/.hidden
+~/.config/powermanagementprofilesrc
+~/.config/kscreenlockerrc
+~/.bashrc
