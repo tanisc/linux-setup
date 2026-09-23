@@ -15,7 +15,7 @@ require_sudo() {
 # Strips a leading "~/" from a manifest entry, giving a path relative to $HOME.
 strip_home_prefix() {
     local p="$1"
-    printf '%s' "${p#\~/}"
+    printf '%s\n' "${p#\~/}"
 }
 
 # Reads a manifest file, printing one relative-to-$HOME path per line.
