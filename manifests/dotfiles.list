@@ -8,3 +8,5 @@
 ~/.bashrc
 ~/.gitconfig
 ~/.s3cfg
+~/.claude/settings.json
+~/.claude/projects/-home-tanisc--tools-linux-setup/memory

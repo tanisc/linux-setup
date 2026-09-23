@@ -79,7 +79,11 @@ them too).
   + the Night Owl theme).
 - **`dotfiles.list`**: `~/.config/rclone/rclone.conf`, `~/.config/winapps/winapps.conf`,
   `~/.hidden`, `~/.config/powermanagementprofilesrc`, `~/.config/kscreenlockerrc`, `~/.bashrc`,
-  `~/.gitconfig`, `~/.s3cfg` (s3cmd config, holds S3 keys).
+  `~/.gitconfig`, `~/.s3cfg` (s3cmd config, holds S3 keys), `~/.claude/settings.json` (Claude Code
+  user settings, e.g. commit attribution turned off), and
+  `~/.claude/projects/-home-tanisc--tools-linux-setup/memory` (Claude's memory for this repo;
+  the folder name encodes the repo path, so it only applies if the repo is cloned to
+  `~/.tools/linux-setup` again).
 - **`tools-scripts.list`**: `~/.tools/windows`, `~/.tools/fmivpnup.sh`, `~/.tools/fmivpndown.sh`.
 - **`tools-installers.list`**: `esa-snap` → `~/.tools/esa-snap`, `panoply` → `~/.tools/panoply`,
   `miniconda` → `~/.miniconda` (silent install via `-b -u -c -p`; `-c` runs `conda init`, which
