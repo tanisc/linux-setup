@@ -12,6 +12,15 @@ restore_packages_remove() {
             log "Purging apt package(s): ${pkgs[*]}"
             sudo DEBIAN_FRONTEND=noninteractive apt-get purge -y "${pkgs[@]}" || true
             sudo DEBIAN_FRONTEND=noninteractive apt-get autoremove -y || true
+
+            # Pin them to never be (re)installed, since some (e.g. firefox) come back
+            # as a Recommends of a later package (e.g. kubuntu-desktop) otherwise.
+            log "Pinning removed package(s) to prevent reinstallation via Recommends..."
+            {
+                for pkg in "${pkgs[@]}"; do
+                    printf 'Package: %s\nPin: release *\nPin-Priority: -1\n\n' "$pkg"
+                done
+            } | sudo tee /etc/apt/preferences.d/linux-setup-no-reinstall.pref > /dev/null
         fi
     fi
 
