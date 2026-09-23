@@ -33,7 +33,7 @@ restore_winapps() {
     # sg picks up the docker group install_docker() just granted, without needing a fresh login.
     sg docker -c "cd '$dir' && docker compose --file ./compose.yaml up -d"
 
-    warn "Open http://127.0.0.1:8006 in your browser to finish the Windows installation, then install any apps you need from the Microsoft Store (e.g. Office)."
+    warn "Open http://127.0.0.1:8006 in your browser to finish the Windows installation, then install any apps you need from the Microsoft Store (e.g. Office) and set your keyboard input language."
     local ans=""
     while [[ "$ans" != "COMPLETE" ]]; do
         read -r -p "Type COMPLETE once Windows setup is finished: " ans

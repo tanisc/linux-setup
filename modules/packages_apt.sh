@@ -22,4 +22,13 @@ restore_packages_apt() {
     else
         warn "manifests/packages-apt.list not found or empty, skipping package install."
     fi
+
+    # kubuntu-desktop pulls in sddm, but DEBIAN_FRONTEND=noninteractive silently
+    # keeps whatever display manager (e.g. gdm3) was already the default instead
+    # of prompting to switch - so set it explicitly if sddm just got installed.
+    if dpkg -l sddm 2>/dev/null | grep -q '^ii'; then
+        log "Setting sddm as the default display manager..."
+        echo "sddm shared/default-x-display-manager select sddm" | sudo debconf-set-selections
+        sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure sddm
+    fi
 }
