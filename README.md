@@ -64,7 +64,7 @@ them too).
 ## What's actually in each manifest right now
 
 - **`packages-apt.list`**: `kubuntu-desktop` (switches stock Ubuntu → KDE), `git`, `curl`,
-  `vlc`, `rclone`, `qgis`, `openconnect`, `gp-saml-gui`, plus WinApps' apt dependencies
+  `vlc`, `rclone`, `qgis`, `openconnect`, `gp-saml-gui`, `default-jre` (for Panoply), plus WinApps' apt dependencies
   (`dialog`, `freerdp3-x11`, `iproute2`, `libnotify-bin`, `netcat-openbsd`).
 - **`packages-apt-remove.list`** / **`packages-snap-remove.list`**: `firefox` (ships as both
   an apt transitional package and a snap on stock Ubuntu).
