@@ -47,6 +47,16 @@ restore_conda_envs() {
         return
     fi
 
+    # Accept Anaconda's channel ToS up front so env creation doesn't stop at
+    # an interactive (a)ccept/(r)eject prompt.
+    if "$conda" tos --help >/dev/null 2>&1; then
+        local channel
+        for channel in https://repo.anaconda.com/pkgs/main https://repo.anaconda.com/pkgs/r; do
+            log "Accepting conda ToS for $channel"
+            "$conda" tos accept --override-channels --channel "$channel"
+        done
+    fi
+
     local file name
     for file in "$CONDA_ENVS_DIR"/*.yml; do
         name="$(basename "$file" .yml)"

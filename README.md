@@ -52,7 +52,7 @@ the session into KDE/Plasma and makes the `docker` group membership active.
 | `dotfiles` | Copies generic config files/dirs | `dotfiles.list` |
 | `tools_scripts` | Copies plain scripts under `~/.tools` (chmod +x on restore) | `tools-scripts.list` |
 | `tools_installers` | Apps needing their own installer (mostly under `~/.tools`), target dir comes from the manifest | `tools-installers.list` |
-| `conda_envs` | Backup: `conda env export` of every env into `data/.env/<name>.yml` (overwrites that env's file; never deletes other files in `data/.env/` — remove stale ones yourself, or they get restored too). Restore: recreates each env from its file (`base` is updated in place, existing envs are removed first). Runs after `tools_installers`, which installs Miniconda | (auto-generated, no manifest) |
+| `conda_envs` | Backup: `conda env export` of every env into `data/.env/<name>.yml` (overwrites that env's file; never deletes other files in `data/.env/` — remove stale ones yourself, or they get restored too). Restore: first accepts Anaconda's channel ToS (`pkgs/main`, `pkgs/r`) via `conda tos accept` so it doesn't stop at the prompt, then recreates each env from its file (`base` is updated in place, existing envs are removed first). Runs after `tools_installers`, which installs Miniconda | (auto-generated, no manifest) |
 | `winapps` | Restores the whole `~/.tools/winapps` repo as-is (not re-cloned from GitHub), starts the Windows-in-Docker container, **pauses for manual Windows setup**, then runs the interactive setup wizard | (whole-directory copy, no manifest) |
 | `ssh_gpg` | Copies `~/.ssh` and `~/.gnupg`, fixes permissions (`.ssh`: 700 dir / 600 keys / 644 `*.pub`; `.gnupg`: 700 dirs / 600 files) | (whole-directory copy, no manifest) |
 
