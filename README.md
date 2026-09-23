@@ -74,7 +74,8 @@ too).
 - **`vscode-extensions.list`**: the 9 extensions installed on this machine (remote-dev tooling
   + the Night Owl theme).
 - **`dotfiles.list`**: `~/.config/rclone/rclone.conf`, `~/.config/winapps/winapps.conf`,
-  `~/.hidden`, `~/.config/powermanagementprofilesrc`, `~/.config/kscreenlockerrc`, `~/.bashrc`.
+  `~/.hidden`, `~/.config/powermanagementprofilesrc`, `~/.config/kscreenlockerrc`, `~/.bashrc`,
+  `~/.gitconfig`.
 - **`tools-scripts.list`**: `~/.tools/windows`, `~/.tools/fmivpnup.sh`, `~/.tools/fmivpndown.sh`.
 - **`tools-installers.list`**: `esa-snap` → `~/.tools/esa-snap`, `panoply` → `~/.tools/panoply`.
 
@@ -106,5 +107,3 @@ saved connections, `~/Downloads` installer leftovers, GPG keys (none exist on th
   crontab, `~/.tools` scripts, bash history — all clean). `rclone.conf` alone covers everything
   that exists today. If a mount gets set up later (systemd unit / fstab entry / script), add
   whatever triggers it to the appropriate manifest.
-- **`~/.gitconfig`** — doesn't exist on this machine yet; a one-line addition to `dotfiles.list`
-  whenever it does.
