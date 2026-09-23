@@ -5,6 +5,7 @@ git
 curl
 vlc
 rclone
+s3cmd
 qgis
 openconnect
 gp-saml-gui

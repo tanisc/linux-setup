@@ -14,9 +14,10 @@ conda environments) to a fresh Ubuntu/Kubuntu install.
   (`backup_<step>` / `restore_<step>`) defined in `modules/<step>.sh`, usually driven by a
   plain-text file in `manifests/`.
 - `--only=step1,step2` and `--skip=step1,step2` let you run/skip a subset of steps.
-- `data/` is **gitignored** — it holds real file content (including secrets like SSH keys and
-  the WinApps RDP password), so it never leaves this machine via git. Only `manifests/`,
-  `modules/`, and the two top-level scripts get pushed to GitHub. Moving `data/` between
+- `data/` is **gitignored** — it holds real file content (including secrets like SSH keys, S3
+  keys in `.s3cfg`, rclone remote credentials in `rclone.conf`, and the WinApps RDP password),
+  so it never leaves this machine via git.
+  Only `manifests/`, `modules/`, and the two top-level scripts get pushed to GitHub. Moving `data/` between
   machines (USB, etc.) is done manually, not by these scripts.
 - `restore.sh` always **replaces** existing files at the destination — no `.bak` copies, no
   `--force` flag needed.
@@ -50,7 +51,7 @@ the session into KDE/Plasma and makes the `docker` group membership active.
 | `packages_flatpak` | Adds the flathub remote if needed, installs listed flatpaks | `packages-flatpak.list` |
 | `installers` | System-wide apps with their own install logic: `chrome`, `vscode`, `claude`, `docker` (also adds you to the `docker` group) | `installers.list` |
 | `vscode_extensions` | Installs VS Code extensions via `code --install-extension` | `vscode-extensions.list` |
-| `dotfiles` | Copies generic config files/dirs | `dotfiles.list` |
+| `dotfiles` | Copies generic config files/dirs; on restore, forces the credential files (`rclone.conf`, `.s3cfg`, `winapps.conf`) to 600 | `dotfiles.list` |
 | `tools_scripts` | Copies plain scripts under `~/.tools` (chmod +x on restore) | `tools-scripts.list` |
 | `tools_installers` | Apps needing their own installer (mostly under `~/.tools`), target dir comes from the manifest | `tools-installers.list` |
 | `conda_envs` | Backup: `conda env export` of every env into `data/.env/<name>.yml` (overwrites that env's file; never deletes other files in `data/.env/` — remove stale ones yourself, or they get restored too). Restore: first accepts Anaconda's channel ToS (`pkgs/main`, `pkgs/r`) via `conda tos accept` so it doesn't stop at the prompt, then recreates each env from its file (`base` is updated in place, existing envs are removed first). An env that fails to build only prints a warning (failed envs are listed at the end of the step); the rest of the restore continues. Runs after `tools_installers`, which installs Miniconda | (auto-generated, no manifest) |
@@ -65,7 +66,7 @@ them too).
 ## What's actually in each manifest right now
 
 - **`packages-apt.list`**: `kubuntu-desktop` (switches stock Ubuntu → KDE), `git`, `curl`,
-  `vlc`, `rclone`, `qgis`, `openconnect`, `gp-saml-gui`, `default-jre` (for Panoply),
+  `vlc`, `rclone`, `s3cmd`, `qgis`, `openconnect`, `gp-saml-gui`, `default-jre` (for Panoply),
   `build-essential` (for pip packages compiled from source in conda envs, e.g. `gdal`), plus
   WinApps' apt dependencies (`dialog`, `freerdp3-x11`, `iproute2`, `libnotify-bin`, `netcat-openbsd`).
 - **`packages-apt-remove.list`** / **`packages-snap-remove.list`**: `firefox` (ships as both
@@ -78,7 +79,7 @@ them too).
   + the Night Owl theme).
 - **`dotfiles.list`**: `~/.config/rclone/rclone.conf`, `~/.config/winapps/winapps.conf`,
   `~/.hidden`, `~/.config/powermanagementprofilesrc`, `~/.config/kscreenlockerrc`, `~/.bashrc`,
-  `~/.gitconfig`.
+  `~/.gitconfig`, `~/.s3cfg` (s3cmd config, holds S3 keys).
 - **`tools-scripts.list`**: `~/.tools/windows`, `~/.tools/fmivpnup.sh`, `~/.tools/fmivpndown.sh`.
 - **`tools-installers.list`**: `esa-snap` → `~/.tools/esa-snap`, `panoply` → `~/.tools/panoply`,
   `miniconda` → `~/.miniconda` (silent install via `-b -u -c -p`; `-c` runs `conda init`, which
