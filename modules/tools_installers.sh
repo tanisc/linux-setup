@@ -34,6 +34,20 @@ install_panoply() {
     log "Panoply extracted to $dir (run with $dir/panoply.sh)"
 }
 
+install_miniconda() {
+    local dir="$1"
+    local installer="/tmp/Miniconda3-latest-Linux-x86_64.sh"
+    log "Downloading Miniconda installer..."
+    curl -fL -o "$installer" "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+    mkdir -p "$(dirname "$dir")"
+    log "Running Miniconda installer unattended into $dir ..."
+    # -b: batch mode (no prompts, accepts the license), -u: update instead of
+    # failing if $dir already exists, -p: install prefix, -c: run `conda init`
+    # (appends the conda block to ~/.bashrc; only applies in batch mode).
+    bash "$installer" -b -u -c -p "$dir"
+    rm -f "$installer"
+}
+
 restore_tools_installers() {
     local manifest="$SCRIPT_DIR/manifests/tools-installers.list"
     if [[ ! -s "$manifest" ]]; then

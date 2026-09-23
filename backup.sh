@@ -19,7 +19,7 @@ for arg in "$@"; do
 done
 
 # Ordered list of steps. Each step "$s" must define backup_$s in modules/$s.sh.
-STEPS=(dotfiles tools_scripts ssh_gpg winapps)
+STEPS=(dotfiles tools_scripts ssh_gpg winapps conda_envs)
 
 should_run() {
     local step="$1"

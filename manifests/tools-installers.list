@@ -3,3 +3,4 @@
 # Lines starting with # (and blank lines) are ignored.
 esa-snap ~/.tools/esa-snap
 panoply ~/.tools/panoply
+miniconda ~/.miniconda
