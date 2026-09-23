@@ -79,18 +79,14 @@ too).
 - **`tools-scripts.list`**: `~/.tools/windows`, `~/.tools/fmivpnup.sh`, `~/.tools/fmivpndown.sh`.
 - **`tools-installers.list`**: `esa-snap` → `~/.tools/esa-snap`, `panoply` → `~/.tools/panoply`.
 
-## Known caveats (things I couldn't verify by actually running them)
+## Known caveats
 
-- **`esa-snap`**: uses install4j's documented `-q -dir <path>` silent-install flags. Confirmed
-  this is an install4j installer, but the ~1.1GB installer was never actually run end-to-end —
-  check the result on the first real restore.
-- **`panoply`**: install directory defaulted to `~/.tools/panoply` (matching the `esa-snap`
-  pattern) since it wasn't installed anywhere on this machine to confirm against.
 - **`winapps`**: after `docker compose up -d` and the browser-based Windows setup, the script
   runs the bundled `setup.sh`, which is an interactive `dialog`-based wizard by design — this
   step is intentionally not fully unattended.
-- **KDE session / `docker` group**: both require a reboot or re-login to actually take effect;
-  `restore.sh` prints a reminder at the end but doesn't reboot for you.
+- **KDE session / `docker` group**: both require a reboot or re-login to actually take effect
+  (confirmed working after reboot); `restore.sh` prints a reminder at the end but doesn't
+  reboot for you.
 
 ## Deliberately not handled
 

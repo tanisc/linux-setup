@@ -9,6 +9,9 @@ qgis
 openconnect
 gp-saml-gui
 
+# required by panoply
+default-jre
+
 # winapps deps (https://github.com/winapps-org/winapps)
 dialog
 freerdp3-x11
