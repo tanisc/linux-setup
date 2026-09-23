@@ -107,3 +107,6 @@ saved connections, `~/Downloads` installer leftovers, GPG keys (none exist on th
   crontab, `~/.tools` scripts, bash history — all clean). `rclone.conf` alone covers everything
   that exists today. If a mount gets set up later (systemd unit / fstab entry / script), add
   whatever triggers it to the appropriate manifest.
+- **Chrome disk cache size** — planned: a custom `.desktop` launcher with `--disk-cache-size=`
+  added to `Exec=`, to cap Chrome's cache. Not set up yet (no override currently exists under
+  `~/.local/share/applications`). Once created, add that `.desktop` file to `dotfiles.list`.
