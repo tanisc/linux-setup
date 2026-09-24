@@ -30,5 +30,22 @@ restore_packages_apt() {
         log "Setting sddm as the default display manager..."
         echo "sddm shared/default-x-display-manager select sddm" | sudo debconf-set-selections
         sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure sddm
+        # dpkg-reconfigure only updates /etc/X11/default-display-manager; --force
+        # repoints the display-manager.service alias away from gdm3 to sddm.
+        sudo systemctl enable sddm --force
+        local dm; dm="$(cat /etc/X11/default-display-manager 2>/dev/null || true)"
+        if [[ "$dm" != */sddm ]]; then
+            # Non-interactive switch didn't take: fall back to the interactive
+            # prompt (pick sddm there), then re-point the service again.
+            warn "Default display manager is '$dm', not sddm - running 'dpkg-reconfigure sddm' interactively; choose sddm."
+            sudo dpkg-reconfigure sddm
+            sudo systemctl enable sddm --force
+            dm="$(cat /etc/X11/default-display-manager 2>/dev/null || true)"
+        fi
+        if [[ "$dm" == */sddm ]]; then
+            log "Default display manager: $dm"
+        else
+            warn "Default display manager is still '$dm', not sddm."
+        fi
     fi
 }

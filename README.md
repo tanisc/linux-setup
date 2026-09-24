@@ -46,7 +46,7 @@ the session into KDE/Plasma and makes the `docker` group membership active.
 | Step | What it does | Manifest(s) |
 |---|---|---|
 | `packages_remove` | `apt purge` / `snap remove` unwanted defaults (e.g. `firefox`) | `packages-apt-remove.list`, `packages-snap-remove.list` |
-| `packages_apt` | `apt update` + `full-upgrade` (non-interactive), then installs the listed packages | `packages-apt.list` |
+| `packages_apt` | `apt update` + `full-upgrade` (non-interactive), then installs the listed packages. Afterwards (i.e. once `kubuntu-desktop` has pulled in `sddm`), if `sddm` is installed, makes it the default display manager (`dpkg-reconfigure sddm` + `systemctl enable sddm --force`) and checks `/etc/X11/default-display-manager`; if that still isn't sddm, reruns `dpkg-reconfigure sddm` interactively (pick sddm at the prompt) | `packages-apt.list` |
 | `packages_snap` | Installs listed snaps (`classic` suffix supported) | `packages-snap.list` |
 | `packages_flatpak` | Adds the flathub remote if needed, installs listed flatpaks | `packages-flatpak.list` |
 | `installers` | System-wide apps with their own install logic: `chrome`, `vscode`, `claude`, `docker` (also adds you to the `docker` group) | `installers.list` |
