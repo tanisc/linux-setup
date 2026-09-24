@@ -1,0 +1,6 @@
+# systemd user unit file names under ~/.config/systemd/user/, one per line.
+# Backed up/restored as files, then enabled + started (systemctl --user enable --now) on restore.
+# Lines starting with # (and blank lines) are ignored.
+rclone-onedrive.service
+rclone-gdrive.service
+rclone-gdrive-shared.service

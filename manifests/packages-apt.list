@@ -3,8 +3,11 @@
 kubuntu-desktop
 git
 curl
+tree
 vlc
 rclone
+# fusermount3, used by rclone mounts (rclone-onedrive.service)
+fuse3
 s3cmd
 qgis
 openconnect

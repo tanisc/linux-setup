@@ -24,16 +24,31 @@ backup_conda_envs() {
 
     mkdir -p "$CONDA_ENVS_DIR"
 
-    local prefix name
+    # conda prints a CondaExportWarning listing every pip-installed package to
+    # stderr; capture stderr and replace that block with a one-line summary.
+    local errfile; errfile="$(mktemp)"
+    local prefix name npip other
     while IFS= read -r prefix; do
         if [[ "$prefix" == "$root" ]]; then
             name="base"
         else
             name="$(basename "$prefix")"
         fi
-        "$conda" env export -p "$prefix" > "$CONDA_ENVS_DIR/$name.yml"
+        if ! "$conda" env export -p "$prefix" > "$CONDA_ENVS_DIR/$name.yml" 2> "$errfile"; then
+            cat "$errfile" >&2
+            rm -f "$errfile"
+            err "Exporting conda env '$name' failed"
+            return 1
+        fi
         log "Exported conda env '$name' -> data/.env/$name.yml"
+
+        npip="$(grep -oE 'contains [0-9]+ packages? installed via pip' "$errfile" | grep -oE '[0-9]+' || true)"
+        [[ -n "$npip" ]] && warn "  $name: $npip pip package(s) (in the .yml, but conda can't pin them exactly)"
+        # Anything else on stderr (outside the warning block) is still shown.
+        other="$(awk '/CondaExportWarning: /{skip=1} !skip && NF; /warnings\.warn\(warning, CondaExportWarning\)/{skip=0}' "$errfile")"
+        [[ -n "$other" ]] && printf '%s\n' "$other" >&2
     done < <("$conda" env list | awk '!/^#/ && NF {print $NF}')
+    rm -f "$errfile"
 }
 
 restore_conda_envs() {

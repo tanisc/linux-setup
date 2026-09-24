@@ -19,7 +19,7 @@ for arg in "$@"; do
 done
 
 # Ordered list of steps. Each step "$s" must define restore_$s in modules/$s.sh.
-STEPS=(packages_remove packages_apt packages_snap packages_flatpak installers vscode_extensions dotfiles tools_scripts tools_installers conda_envs winapps ssh_gpg)
+STEPS=(packages_remove packages_apt packages_snap packages_flatpak installers vscode_extensions dotfiles systemd_user tools_scripts tools_installers conda_envs winapps ssh_gpg)
 
 should_run() {
     local step="$1"
