@@ -4,6 +4,7 @@ kubuntu-desktop
 git
 curl
 tree
+distrobox
 vlc
 rclone
 # fusermount3, used by rclone mounts (rclone-onedrive.service)

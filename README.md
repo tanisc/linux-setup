@@ -66,7 +66,7 @@ yourself. `dotfiles`, `systemd_user`, `tools_scripts`, `conda_envs`, and `ssh_gp
 
 ## What's actually in each manifest right now
 
-- **`packages-apt.list`**: `kubuntu-desktop` (switches stock Ubuntu → KDE), `git`, `curl`, `tree`,
+- **`packages-apt.list`**: `kubuntu-desktop` (switches stock Ubuntu → KDE), `git`, `curl`, `tree`, `distrobox`,
   `vlc`, `rclone`, `fuse3` (`fusermount3` for rclone mounts), `s3cmd`, `qgis`, `openconnect`,
   `gp-saml-gui`, `default-jre` (for Panoply),
   `build-essential` (for pip packages compiled from source in conda envs, e.g. `gdal`), plus
