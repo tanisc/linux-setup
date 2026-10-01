@@ -94,7 +94,8 @@ yourself. `dotfiles`, `systemd_user`, `tools_scripts`, `conda_envs`, and `ssh_gp
 
   The Google Drive mounts use `--drive-export-formats link.html`, so Google Docs/Sheets show up
   as `.html` link files that open in the browser.
-- **`tools-scripts.list`**: `~/.tools/windows`, `~/.tools/fmivpnup.sh`, `~/.tools/fmivpndown.sh`.
+- **`tools-scripts.list`**: `~/.tools/windows`, `~/.tools/fmivpnup.sh`, `~/.tools/fmivpndown.sh`,
+  `~/.tools/steam` (launches Steam inside the `game` distrobox).
 - **`tools-installers.list`**: `esa-snap` → `~/.tools/esa-snap`, `panoply` → `~/.tools/panoply`,
   `miniconda` → `~/.miniconda` (silent install via `-b -u -c -p`; `-c` runs `conda init`, which
   appends the conda block to `~/.bashrc`).
