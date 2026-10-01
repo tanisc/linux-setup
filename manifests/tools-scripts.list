@@ -1,6 +1,6 @@
 # Plain scripts/dirs under ~/.tools, copied as-is (not installer-based apps).
 # Paths relative to $HOME, one per line ("~/" prefix optional).
 ~/.tools/windows
-~/.tools/fmivpnup.sh
-~/.tools/fmivpndown.sh
+~/.tools/fmivpnup
+~/.tools/fmivpndown
 ~/.tools/steam
